@@ -284,20 +284,6 @@ class ArmAnimatorApp( JoyApp ):
         plotVE(fvp,self.paper_w,iCube,'g--',alpha=0.3)
         plotVE(fvp,self.paper_w[::2,:],iFace,'g-')
         plotVE(fvp,self.ws_w,iCube,'k:')
-
-        # visualize calibration points
-        
-        x = []
-        y = []
-        z = []
-        for coord in self.calibrate.calibCoords:
-          coordTransformed = self.paperToWorld(coord)
-          x.append(coordTransformed[0])
-          y.append(coordTransformed[1])
-          z.append(coordTransformed[2])
-        fvp.plot3D(x,y,z,'go',ms=4)
-        fvp.plot3D(x[0], y[0], z[0], 'ro', ms=4)
-        fvp.plot3D(x[1], y[1], z[1], 'bo', ms=4)
         
 
     def _animation(self, fig):
