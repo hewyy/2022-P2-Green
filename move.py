@@ -81,3 +81,53 @@ class Move( Plan ):
                 motor.set_pos(rad2deg(self.moveArm.angles[i])*100)    #feed in angle to set_pos as centidegrees
             yield self.forDuration(4)
         progress('Move complete')
+
+
+class MoveAutonomous( Plan ):
+    def __init__(self,app,*arg,**kw):
+        Plan.__init__(self,app,*arg,**kw)
+        self.app = app
+        self.steps = []
+        #Make another arm with the same orientation and arm lenght segments as
+        #what is defined in armSpec. This is what is used for inverse kinematics.
+        self.pos = []   #Goal position for move. Will either be grid point or square corner. 
+        self.calibrated = False
+        self.square = False
+        self.currentPos = []
+        self.nextPos = []
+        self.curr = 0
+        self.step_constant = 1/7
+    #used to get initial joint angles before autonomous move
+    def syncArm(self):
+        ang = zeros(len(self.app.arm))
+        for i,motor in enumerate(self.app.arm):
+            ang[i] = motor.get_pos()*(pi/18000.)   #convert angles from centidegrees to radians
+        self.currentPos = ang
+    
+    #for moving towards desired position
+    def behavior(self):
+        # if it is calibrated, we want to draw the line to the next position using the calibrated values
+        if self.calibrated:
+            # TODO: figure out goal angles
+            self.pos = append(self.moveArm.ee, [1])
+        # set pos to the first calibration point if not calibrated
+
+        self.syncArm()   
+
+        num_steps = 5
+
+        #Create a number of evenly spaced steps between current angle orientations and goal angle orientations
+        self.steps = linspace(self.currentPos,self.pos,num_steps)[:,:-1]    #Can adjust number of steps.
+        #execute movement along path of steps
+        for stepCount,step in enumerate(self.steps):
+            progress('Step #%d, %s' % (stepCount,str(step)))
+            self.app.currStep = stepCount
+            progress(step)
+            
+
+
+            for i,motor in reversed(list(enumerate(self.app.arm))):
+                #Calculate angles to move each step and move the motors 
+                motor.set_pos(rad2deg(self.moveArm.angles[i])*100)    #feed in angle to set_pos as centidegrees
+            yield self.forDuration(4)
+        progress('Move complete')

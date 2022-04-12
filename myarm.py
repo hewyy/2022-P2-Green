@@ -49,7 +49,6 @@ class MyArm(ArmAnimatorApp):
       
       self.idealArm = Arm(armSpec)  #create instance of arm class without real-life properties
       self.move = Move(self)     #move plan
-      self.show()
      
     def show(self,fvp):
       fvp.plot3D([0],[0],[0],'^k',ms=10) # Plot black triangle at origin
