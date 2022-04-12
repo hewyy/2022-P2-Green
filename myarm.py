@@ -44,8 +44,8 @@ class MyArm(ArmAnimatorApp):
         [0,1,0,10,0] #the arm extending/unextending 
       ]).T
       self.armSpec = armSpec
-
-      JoyApp.__init__(self,*arg,**kw)
+                      
+      ArmAnimatorApp.__init__(self,armSpec,Tws2w,Tp2ws,simTimeStep=0.25,**kw)
       
       self.idealArm = Arm(armSpec)  #create instance of arm class without real-life properties
       self.move = Move(self)     #move plan
