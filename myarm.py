@@ -109,7 +109,7 @@ class MyArm(JoyApp):
       for i in range(nx-(nx % 2)):
           idx = nx*(2*i+1)
           grid_idx[idx:idx+nx] = grid_idx[idx:idx+nx][::-1]
-      return dot(grid,self.Tp2w.T), nx, ny
+      return dot(grid,self.Tp2w.T), nx, ny # test
       
     def onStart(self):
       #ArmAnimatorApp.onStart(self)
