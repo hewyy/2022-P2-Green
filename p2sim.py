@@ -286,7 +286,7 @@ class ArmAnimatorApp( JoyApp ):
         plotVE(fvp,self.ws_w,iCube,'k:')
 
         # visualize calibration points
-        '''
+        
         x = []
         y = []
         z = []
@@ -298,7 +298,7 @@ class ArmAnimatorApp( JoyApp ):
         fvp.plot3D(x,y,z,'go',ms=4)
         fvp.plot3D(x[0], y[0], z[0], 'ro', ms=4)
         fvp.plot3D(x[1], y[1], z[1], 'bo', ms=4)
-        '''
+        
 
     def _animation(self, fig):
       fig.clf()
